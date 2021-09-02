@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:13:35 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/02 02:55:58 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/02 12:03:12 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ void    pipex(int input, int output, char **cmd1, char **cmd2, char **envp)
     waitpid(-1, &status, 0);  // while they finish their tasks
 }
 
+int     check_access(char *infile, char *outfile)
+{
+    if (access(infile, R_OK) != 0)
+    {
+        perror("input.txt : Reading permission denied");
+        return (EXIT_FAILURE);
+    }
+    if (access(outfile, W_OK) != 0)
+    {
+        perror("output.txt : Writing permission denied");
+        return (EXIT_FAILURE);
+    }
+    else
+        return (EXIT_SUCCESS);
+}
+
 int     main(int argc, char **argv, char **envp)
 {
     int     in_fd;
@@ -65,8 +81,13 @@ int     main(int argc, char **argv, char **envp)
     {
         cmd_arg1 = ft_split(argv[2], ' ');
         cmd_arg2 = ft_split(argv[3], ' ');
-        in_fd = open(argv[1], O_RDONLY);
-        out_fd = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+        if (check_access(argv[1], argv[4]) != 0)
+            exit(EXIT_FAILURE);
+        else
+        {
+            in_fd = open(argv[1], O_RDONLY);
+            out_fd = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+        }
         pipex(in_fd, out_fd, cmd_arg1, cmd_arg2, envp);
     }
     else
