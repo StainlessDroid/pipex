@@ -6,7 +6,7 @@
 #    By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/24 18:37:12 by mpascual          #+#    #+#              #
-#    Updated: 2021/09/01 14:13:42 by mpascual         ###   ########.fr        #
+#    Updated: 2021/09/05 01:48:19 by mpascual         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 NAME = pipex
 REG_SRC_FILES = pipex.c
 BONUS_SRC_FILES = bonus/*.o
+HEADER = pipex.h
 LIB_PATH = libft_printf/libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
 
@@ -28,7 +29,7 @@ OBJS = $(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(HEADER)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L. $(LIB_PATH)
 
 lib:

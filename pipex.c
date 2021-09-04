@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:13:35 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/02 12:03:12 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/05 01:33:38 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,36 @@
 #include <sys/wait.h>
 #include <stdio.h>
 
+
+char    *get_path(char **envp)
+{
+    char    *path;
+    int     i;
+
+    i = 0;
+    path = NULL;
+    while (envp[i])
+    {
+        if (ft_strnstr(envp[i], "PATH=", 6))
+            return(envp[i] + 5);
+        else
+            i++;
+    }
+    return(path);
+}
+
 void    pipex(int input, int output, char **cmd1, char **cmd2, char **envp)
 {
-    int   fd[2];
-    int   status;
-    pid_t child1;
-    pid_t child2;
+    int     fd[2];
+    int     status;
+    pid_t   child1;
+    pid_t   child2;
+    char    **paths;
+    int     i;
 
     status = 0;
+    paths = ft_split(get_path(envp), ':');
+    i = 0;
     if (pipe(fd) != 0)
         perror("Error");
     child1 = fork();
@@ -33,8 +55,12 @@ void    pipex(int input, int output, char **cmd1, char **cmd2, char **envp)
         dup2(input, 0);
         close(fd[0]);
         close(fd[1]);
-        execve(ft_strjoin("/usr/bin/", cmd1[0]), cmd1, envp);
-        perror("Error");
+        while (paths[i])
+        {
+            paths[i] = ft_strjoin(paths[i], "/");
+            execve(ft_strjoin(paths[i], cmd1[0]), cmd1, envp);
+            i++;
+        }
     }
     child2 = fork();
     if (child2 < 0)
@@ -45,8 +71,13 @@ void    pipex(int input, int output, char **cmd1, char **cmd2, char **envp)
         dup2(output, 1);
         close(fd[0]);
         close(fd[1]);
-        execve(ft_strjoin("/usr/bin/", cmd2[0]), cmd2, envp);
-        perror("Error");
+        i = 0;
+        while (paths[i])
+        {
+            paths[i] = ft_strjoin(paths[i], "/");
+            execve(ft_strjoin(paths[i], cmd2[0]), cmd2, envp);
+            i++;
+        }
     }
     close(fd[0]);
     close(fd[1]);
@@ -58,16 +89,18 @@ int     check_access(char *infile, char *outfile)
 {
     if (access(infile, R_OK) != 0)
     {
-        perror("input.txt : Reading permission denied");
+        perror("input.txt : ");
         return (EXIT_FAILURE);
     }
-    if (access(outfile, W_OK) != 0)
+    if (access(outfile, F_OK) == 0)
     {
-        perror("output.txt : Writing permission denied");
+        if (access(outfile, W_OK) != 0)
+        {
+        perror("output.txt ");
         return (EXIT_FAILURE);
+        }
     }
-    else
-        return (EXIT_SUCCESS);
+    return (EXIT_SUCCESS);
 }
 
 int     main(int argc, char **argv, char **envp)
