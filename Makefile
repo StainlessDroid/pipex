@@ -6,14 +6,14 @@
 #    By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/24 18:37:12 by mpascual          #+#    #+#              #
-#    Updated: 2021/09/05 01:48:19 by mpascual         ###   ########.fr        #
+#    Updated: 2021/09/05 02:20:19 by mpascual         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # To include bonus in compilation call makefile with "WITH_BONUS=1" argument
 
 NAME = pipex
-REG_SRC_FILES = pipex.c
+REG_SRC_FILES = pipex.c utils.c
 BONUS_SRC_FILES = bonus/*.o
 HEADER = pipex.h
 LIB_PATH = libft_printf/libftprintf.a
