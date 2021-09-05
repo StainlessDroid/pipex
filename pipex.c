@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:13:35 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/05 02:19:58 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/05 18:20:59 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ int     main(int argc, char **argv, char **envp)
         pipex(in_fd, out_fd, cmd_arg1, cmd_arg2, envp);
     }
     else
+    {
+        perror("Wrong number of arguments");
         exit(EXIT_FAILURE);
+    }
     return (0);
 }

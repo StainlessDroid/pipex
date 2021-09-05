@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 02:18:02 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/05 02:20:02 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/05 02:39:09 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int     check_access(char *infile, char *outfile)
 {
     if (access(infile, R_OK) != 0)
     {
-        perror("input.txt : ");
+        perror("input file");
         return (EXIT_FAILURE);
     }
     if (access(outfile, F_OK) == 0)
     {
         if (access(outfile, W_OK) != 0)
         {
-        perror("output.txt ");
+        perror("output file");
         return (EXIT_FAILURE);
         }
     }
