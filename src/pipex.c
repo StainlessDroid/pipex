@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:13:35 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/06 19:10:53 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/06 19:26:56 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ int	main(int argc, char **argv, char **envp)
 		perror("Wrong number of arguments");
 		exit(EXIT_FAILURE);
 	}
+	close(in_out[0]);
+	close(in_out[1]);
 	return (0);
 }
