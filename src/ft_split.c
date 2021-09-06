@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpascual <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 17:47:25 by mpascual          #+#    #+#             */
-/*   Updated: 2019/11/27 15:50:17 by mpascual         ###   ########.fr       */
+/*   Created: 2021/09/06 10:15:05 by mpascual          #+#    #+#             */
+/*   Updated: 2021/09/06 10:15:40 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
 
 static int		count_str(char const *s1, char c)
 {

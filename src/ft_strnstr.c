@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbrlen.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/15 18:49:38 by mpascual          #+#    #+#             */
-/*   Updated: 2020/10/06 17:52:35 by mpascual         ###   ########.fr       */
+/*   Created: 2021/09/06 10:17:24 by mpascual          #+#    #+#             */
+/*   Updated: 2021/09/06 10:18:01 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-**  ft_nbrlen doesn't count for the negative sing if the number is < 0
-**  It returns ONLY the number of DIGITS
-*/
+#include "../pipex.h"
 
-#include "libft.h"
-
-unsigned int	ft_nbrlen(long nb, int base_len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	long	n_digits;
+	size_t		i;
+	size_t		j;
 
-	n_digits = 1;
-	if (nb < 0)
-		nb *= -1;
-	while (nb >= base_len)
+	i = 0;
+	j = 0;
+	while (haystack[i] && (i < len))
 	{
-		n_digits++;
-		nb /= base_len;
+		while ((haystack[i + j] == needle[j]) && needle[j] && ((i + j) < len))
+			j++;
+		if (!needle[j])
+			return ((char *)&haystack[i]);
+		j = 0;
+		i++;
 	}
-	return (n_digits);
+	if (!needle[0])
+		return ((char *)&haystack[i]);
+	return (NULL);
 }

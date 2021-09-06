@@ -6,17 +6,17 @@
 #    By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/24 18:37:12 by mpascual          #+#    #+#              #
-#    Updated: 2021/09/05 02:20:19 by mpascual         ###   ########.fr        #
+#    Updated: 2021/09/06 10:31:54 by mpascual         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # To include bonus in compilation call makefile with "WITH_BONUS=1" argument
 
 NAME = pipex
-REG_SRC_FILES = pipex.c utils.c
+REG_SRC_FILES = src/pipex.c src/utils.c src/ft_split.c src/ft_strjoin.c \
+				src/ft_strnstr.c src/ft_strlen.c
 BONUS_SRC_FILES = bonus/*.o
 HEADER = pipex.h
-LIB_PATH = libft_printf/libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
 
 ifdef WITH_BONUS
@@ -30,10 +30,7 @@ OBJS = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L. $(LIB_PATH)
-
-lib:
-	cd libft_printf && make re && make clean && cd ../
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -rf $(OBJS)

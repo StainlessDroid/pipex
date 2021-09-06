@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpascual <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 18:14:51 by mpascual          #+#    #+#             */
-/*   Updated: 2019/11/27 19:28:14 by mpascual         ###   ########.fr       */
+/*   Created: 2021/09/06 10:18:33 by mpascual          #+#    #+#             */
+/*   Updated: 2021/09/06 10:18:48 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *n)
+size_t		ft_strlen(const char *s)
 {
-	t_list	*elem;
+	size_t	l;
 
-	elem = n;
-	elem->next = *alst;
-	*alst = elem;
+	l = 0;
+	while (s[l] != '\0')
+		l++;
+	return (l);
 }
