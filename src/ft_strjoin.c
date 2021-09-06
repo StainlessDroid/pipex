@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 10:16:41 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/06 10:16:59 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/06 10:50:23 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	i1 = 0;
 	i2 = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	else if (!(nstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+	nstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s1 || !s2 || !nstr)
 		return (NULL);
 	else
 	{
