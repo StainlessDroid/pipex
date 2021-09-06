@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:13:35 by mpascual          #+#    #+#             */
-/*   Updated: 2021/09/06 10:27:54 by mpascual         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:17:43 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	exec_cmd1(int *fd, int input, char **cmd1, char **envp)
 		execve(ft_strjoin(paths[i], cmd1[0]), cmd1, envp);
 		i++;
 	}
+	perror("command nor found");
 	exit(EXIT_FAILURE);
 }
 
@@ -50,6 +51,7 @@ void	exec_cmd2(int *fd, int output, char **cmd2, char **envp)
 		execve(ft_strjoin(paths[i], cmd2[0]), cmd2, envp);
 		i++;
 	}
+	perror("command not found");
 	exit(EXIT_FAILURE);
 }
 
@@ -67,7 +69,7 @@ void	pipex(int *in_out, char **cmd1, char **cmd2, char **envp)
 	if (child1 < 0)
 		perror("Fork: ");
 	if (child1 == 0)
-		exec_cmd1(fd, in_out[0], cmd1, envp);
+		exec_cmd1(fd, in_out[0],  cmd1, envp);
 	child2 = fork();
 	if (child2 < 0)
 		perror("Fork: ");
@@ -103,5 +105,6 @@ int	main(int argc, char **argv, char **envp)
 		perror("Wrong number of arguments");
 		exit(EXIT_FAILURE);
 	}
+	while (1);
 	return (0);
 }
