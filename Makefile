@@ -1,49 +1,45 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/08/24 18:37:12 by mpascual          #+#    #+#              #
-#    Updated: 2021/09/06 10:31:54 by mpascual         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# PIPEX MAKEFILE #
 
-# To include bonus in compilation call makefile with "WITH_BONUS=1" argument
+# Output Colors
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
 
-NAME = pipex
-REG_SRC_FILES = src/pipex.c src/utils.c src/ft_split.c src/ft_strjoin.c \
-				src/ft_strnstr.c src/ft_strlen.c
-BONUS_SRC_FILES = bonus/*.o
-HEADER = pipex.h
-CFLAGS = -Wall -Wextra -Werror
+# Global Config
+NAME		= pipex
+LIBFT_DIR	= ./libft
+LIBFT		= libft.a
+CC			= cc
+SRCS		= src/main.c src/utils.c
+HEADER		= src/pipex.h
 
-ifdef WITH_BONUS
-SRC = $(REG_SRC_FILES) $(BONUS_SRC_FILES)
-else
-SRC = $(REG_SRC_FILES)
-endif
+OBJS			= $(SRCS:.c=.o)
+CFLAGS			= -Wall -Wextra -Werror
 
-OBJS = $(SRC:%.c=%.o)
-
-all: $(NAME)
+all: compile_lib $(NAME)
 
 $(NAME): $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L. $(LIBFT_DIR)/$(LIBFT)
+	@echo "$(GREEN)$(NAME) created ✓${CLR_RMV}"
+
+compile_lib:
+	cd $(LIBFT_DIR) && $(MAKE)
 
 clean:
 	rm -rf $(OBJS)
+	cd $(LIBFT_DIR) && $(MAKE) clean
 
 fclean: clean
+	rm -rf $(LIBFT_DIR)/$(LIBFT)
 	rm -rf $(NAME)
+
+norme:
+		@norminette $(SRCS) $(HEADERS) 
 
 re: fclean all
 
-bonus:
-	$(MAKE) WITH_BONUS=1 all
-
-norme: clean
-	@norminette $(SRC)
-
-.PHONY: all clean fclean re
+.PHONY: all re clean fclean
