@@ -6,7 +6,7 @@
 /*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:29:37 by mapascua          #+#    #+#             */
-/*   Updated: 2025/09/19 15:10:35 by mapascua         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:52:23 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,18 @@ char	*get_path(char **envp)
 	return (path);
 }
 
-int	free_cmds(char **cmd1, char **cmd2)
+int	clean_exit(int *in_out, int *pipe, char **cmd1, char **cmd2)
 {
-	int	i;
-
-	if (cmd1)
+	if (in_out)
 	{
-		i = 0;
-		while (cmd1[i])
-		{
-			free(cmd1[i]);
-			i++;
-		}
-		free(cmd1);
+		close(in_out[0]);
+		close(in_out[1]);
 	}
-	if (cmd2)
+	if (pipe)
 	{
-		i = 0;
-		while (cmd2[i])
-		{
-			free(cmd2[i]);
-			i++;
-		}
-		free(cmd2);
+		close(pipe[0]);
+		close(pipe[1]);
 	}
+	ft_free("dd", cmd1, cmd2);
 	return (EXIT_FAILURE);
 }
