@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mapascua <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:54:27 by mapascua          #+#    #+#             */
-/*   Updated: 2025/09/19 14:54:31 by mapascua         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:54:02 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 
 /* from utils.c */
 int		check_access(char *infile, char *outfile);
+void	try_paths(char **cmd, char **envp);
 char	*get_path(char **envp);
-int		free_cmds(char **cmd1, char **cmd2);
+void	close_streams(int *in_out, int *pipe);
 /* from pipex.c */
-void	exec_cmd1(int *fd, int input, char **cmd1, char **envp);
-void	exec_cmd2(int *fd, int output, char **cmd2, char **envp);
-void	pipex(int *in_out, char **cmd1, char **cmd2, char **envp);
-
+int		pipex(int *in_out, int *pipe, char **argv, char **envp);
+void	pipex_start(int *in_out, int *pipe, char **argv, char **envp);
+void	pipex_end(int *in_out, int *pipe, char **argv, char **envp);
 #endif

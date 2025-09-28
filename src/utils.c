@@ -6,7 +6,7 @@
 /*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:29:37 by mapascua          #+#    #+#             */
-/*   Updated: 2025/09/19 15:10:35 by mapascua         ###   ########.fr       */
+/*   Updated: 2025/09/26 16:58:50 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,30 @@ int	check_access(char *infile, char *outfile)
 	return (EXIT_SUCCESS);
 }
 
+void	try_paths(char **cmd, char **envp)
+{
+	char	**paths;
+	char	*tmp;
+	int		i;
+
+	paths = ft_split(get_path(envp), ':');
+	if (paths == NULL)
+		return ;
+	i = 0;
+	while (paths[i])
+	{
+		tmp = ft_strjoin_chain(3, paths[i], "/", cmd[0]);
+		if (access(tmp, X_OK) == 0)
+			execve(tmp, cmd, envp);
+		ft_free("ss", paths[i], tmp);
+		i++;
+	}
+	free(paths);
+	if (access(cmd[0], X_OK) == 0)
+		execve(cmd[0], cmd, envp);
+	perror("execve");
+}
+
 char	*get_path(char **envp)
 {
 	char	*path;
@@ -47,29 +71,16 @@ char	*get_path(char **envp)
 	return (path);
 }
 
-int	free_cmds(char **cmd1, char **cmd2)
+void	close_streams(int *in_out, int *pipe)
 {
-	int	i;
-
-	if (cmd1)
+	if (in_out)
 	{
-		i = 0;
-		while (cmd1[i])
-		{
-			free(cmd1[i]);
-			i++;
-		}
-		free(cmd1);
+		close(in_out[0]);
+		close(in_out[1]);
 	}
-	if (cmd2)
+	if (pipe)
 	{
-		i = 0;
-		while (cmd2[i])
-		{
-			free(cmd2[i]);
-			i++;
-		}
-		free(cmd2);
+		close(pipe[0]);
+		close(pipe[1]);
 	}
-	return (EXIT_FAILURE);
 }
